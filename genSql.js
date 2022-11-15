@@ -1,16 +1,20 @@
 // Concat SQL Code into Javascript String
 
-const { genSqlStr, genSqlStrArr, genSqlDict } = require("./lib/GenSQL");
+const { genSqlStr, genSqlStrArr, genSqlDict } = require("./lib/js2Sql");
+
+// Function to generate procedure
+const { genSelectAll, genSelectByPk } = require("./lib/js2Sql");
+const { genInsert, genDelete, genUpdate } = require("./lib/js2Sql");
 
 // Generate Sql Statement String
 const path = require('path');
-let fileNameDir = path.join(__dirname, 'models', 'WindGrab');
+let fileNameDir = path.join(__dirname, 'models');
 
 // Glob When Given Directory
-let fileNameArr = ["odoo_temp_data"];
+let fileNameArr = ["toGen"];
 fileNameArr = fileNameArr.map(x => `${x}.sql`);
 
-const sql_js_str = genSqlStr(fileNameDir, fileNameArr);
+const sql_js_str = genSqlStrArr(fileNameDir, fileNameArr);
 
 // const sql_js_str = `
 // -- Permission Table
@@ -25,13 +29,6 @@ const sql_js_str = genSqlStr(fileNameDir, fileNameArr);
 // `
 // .replace(/DECIMAL\(10, (\d)\)/g, "DECIMAL(10,$1)")
 // .replace(/IDENTITY\(1, 1\)/g, "IDENTITY(1,1)");
-
-// Function to generate procedure
-const { genSelectAll } = require("./lib/GenSelectAll");
-const { genSelectByPk } = require("./lib/GenSelectByPk");
-const { genInsert } = require("./lib/GenInsert");
-const { genUpdate } = require("./lib/GenUpdate");
-const { genDelete } = require("./lib/GenDelete");
 
 // Declare Variables to be used
 const sql_dict = genSqlDict(sql_js_str);
