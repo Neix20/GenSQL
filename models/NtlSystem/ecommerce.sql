@@ -59,10 +59,12 @@ CREATE TABLE dbo.TNtlOrder(
     seller_shipping_fee DECIMAL(10, 6),
     buyer_total_price DECIMAL(10, 6),
     seller_total_price DECIMAL(10, 6),
+
     odoo_sales_id INT,
     odoo_status_id INT,
     odoo_sales_no VARCHAR(50),
     external_ref_no VARCHAR(50),
+    
     created_by VARCHAR(100),
     created_date DATETIME,
     last_updated_by VARCHAR(100),

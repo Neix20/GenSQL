@@ -7,14 +7,14 @@ SELECT
     o.sub_total_price "Sub Total Price",
     o.discount_fee "Discount / Voucher",
     o.extra_charges "Extra Charge",
-    o.total_price "Total Price",
+    o.seller_shipping_fee "Shipping Fee",
+    o.seller_total_price "Total Price",
     o.transaction_date "Order Date",
-    s.name "Status"
+    o.status "Status"
 FROM
     dbo.TNtlOrder o
     JOIN dbo.TNtlCustomer c ON o.customer_id = c.id
     JOIN dbo.TNtlPlatform p ON c.platform_id = p.id
-    JOIN dbo.TNtlStatus s on o.status_id = s.id;
 GO
 
 -- Sales Report Item Summary
@@ -46,15 +46,18 @@ BEGIN
     SET @cnt = (SELECT TOP 1 id FROM dbo.TNtlOrder);
 
 	DECLARE @len INT;
-	SET @len = (SELECT COUNT(*) FROM dbo.TNtlOrder);
+	SET @len = (SELECT COUNT(*) + @cnt FROM dbo.TNtlOrder);
 
-    DECLARE @order_no VARCHAR(100);
-
-    WHILE @cnt <= @len
+    WHILE @cnt < @len
     BEGIN
-        SET @order_no = (SELECT name FROM dbo.TNtlOrder WHERE id = @cnt);
         INSERT INTO #tmp_data 
-        VALUES(@order_no, '', '', '' ,'');
+        SELECT 
+            o.name, p.name, '', '', '' 
+        FROM 
+            dbo.TNtlOrder o
+            JOIN dbo.TNtlPlatform p ON o.platform_id = p.id
+        WHERE 
+            o.id = @cnt;
         INSERT INTO #tmp_data
         SELECT 
             name, 
@@ -71,3 +74,8 @@ BEGIN
 
 	DROP TABLE #tmp_data;
 END;
+
+-- Usage
+SELECT * FROM dbo.VNtlSales;
+SELECT * FROM dbo.VNtlSalesItemSummary;
+EXEC dbo.NSP_NTL_SalesReport;

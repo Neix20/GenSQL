@@ -17,7 +17,7 @@ let orderItemDict = {
         attr: `orderItemQty`,
         css: `$"{css} .order-item-count"`,
     },
-}
+};
 
 let customerDict = {
     "CustomerName": {
@@ -32,11 +32,11 @@ let customerDict = {
         attr: `customerAddress`,
         css: `"div.order-detail-left-panels .buyer-address-panel .order-field-shipping-address .show-text"`,
     },
-}
+};
 
 let orderStartDict = {
-    "OrderId": {
-        attr: `orderId`,
+    "OrderNo": {
+        attr: `orderNo`,
         css: `$"{cssClass} .order-field-order-number a"`,
     },
     "OrderLink": {
@@ -47,7 +47,7 @@ let orderStartDict = {
         attr: `orderStatus`,
         css: `$"{cssClass} .order-field-order-status .order-field-value"`,
     },
-}
+};
 
 let orderDict = {
     "OrderTransactionDate": {
@@ -74,13 +74,29 @@ let orderDict = {
         attr: `orderBuyerTotalPrice`,
         css: `"div.buyer-payment-content .next-list-item:last-child .currency-text-scope"`,
     },
-}
+};
+
+let shippingDict = {
+    "ShippingTabLabel": {
+        attr: `shipmentTabLabel`,
+        css: `"ul.next-tabs-nav .next-tabs-tab:nth-child(3) .next-badge"`,
+    },
+};
 
 // se.genDict("tmpDict", orderStartDict);
 // se.genSeleniumElem(orderStartDict);
 
 // se.genSeleniumElemDebug(orderItemDict);
 
-se.genSeleniumElemDebug(customerDict);
-console.log();
-se.genSeleniumElemDebug(orderDict);
+// se.genSeleniumElemDebug(customerDict);
+// console.log();
+// se.genSeleniumElemDebug(orderDict);
+
+// let obj = {
+//     attr: `orderSellerTotalPrice`,
+//     css: `"div.seller-payment-content .next-list-item:last-child .currency-text-scope"`,
+// }
+// console.log(se.genElem(obj.attr, obj.css));
+
+se.genSeleniumElemDebug(shippingDict);
+
