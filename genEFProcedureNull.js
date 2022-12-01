@@ -1,8 +1,8 @@
-const { genInsert, genUpdate, genDelete } = require("./lib/js2CSharp/efProcedure");
+const { genInsertNull, genUpdateNull, genDeleteNull } = require("./lib/js2CSharp/efProcedureNull");
 
 // Concat SQL Code into Javascript String
 
-const { genSqlStr, genSqlStrArr, genSqlDict } = require("./lib/js2Sql");
+const { genSqlStr, genSqlStrArr, genSqlDict } = require("./lib/js2Sql/GenSQL");
 
 // Generate Sql Statement String
 const path = require('path');
@@ -23,7 +23,7 @@ for (let tableName in sql_js_dict) {
 
     tableName = tableName.slice(4);
 
-    console.log(genInsert(tableName, prop));
-    console.log(genUpdate(tableName, prop));
-    console.log(genDelete(tableName));
+    console.log(genInsertNull(tableName, prop));
+    console.log(genUpdateNull(tableName, prop));
+    console.log(genDeleteNull(tableName));
 }

@@ -1,20 +1,21 @@
 -- Generate Sales Report (For Accountant Purpose)   
 CREATE OR ALTER VIEW dbo.VNtlSales AS
 SELECT
-    p.name "Platform",
-    c.name "Customer",
-    o.name "Order",
-    o.sub_total_price "Sub Total Price",
-    o.discount_fee "Discount / Voucher",
-    o.extra_charges "Extra Charge",
-    o.seller_shipping_fee "Shipping Fee",
-    o.seller_total_price "Total Price",
-    o.transaction_date "Order Date",
-    o.status "Status"
+    o.id "id",
+    p.name "platform",
+    c.name "customer",
+    o.name "order",
+    o.sub_total_price "sub_total_price",
+    o.discount_fee "discount_fee",
+    o.extra_charges "extra_charge",
+    o.shipping_fee "shipping_fee",
+    o.total_price "total_price",
+    o.transaction_date "transaction_date",
+    o.status "status"
 FROM
     dbo.TNtlOrder o
     JOIN dbo.TNtlCustomer c ON o.customer_id = c.id
-    JOIN dbo.TNtlPlatform p ON c.platform_id = p.id
+    JOIN dbo.TNtlPlatform p ON c.platform_id = p.id;
 GO
 
 -- Sales Report Item Summary
@@ -25,7 +26,8 @@ SELECT
     oi.sku,
     oi.unit_price,
     CAST(ROUND(oi.quantity, 0) AS INT) "quantity",
-    oi.total_price
+    oi.total_price,
+    oi.remark
 FROM
     dbo.TNtlOrderItem oi;
 GO
@@ -35,36 +37,37 @@ GO
 CREATE OR ALTER PROCEDURE dbo.NSP_NTL_SalesReport AS
 BEGIN
     CREATE TABLE #tmp_data (
-        name VARCHAR(100),
-        sku VARCHAR(100),
-        unit_price VARCHAR(100),
-        quantity VARCHAR(100),
-        total_price VARCHAR(100)
+        name VARCHAR(max),
+        sku VARCHAR(max),
+        unit_price VARCHAR(max),
+        quantity VARCHAR(max),
+        total_price VARCHAR(max),
+        remark VARCHAR(max),
     );
 
     DECLARE @cnt INT;
-    SET @cnt = (SELECT TOP 1 id FROM dbo.TNtlOrder);
+    SET @cnt = (SELECT TOP 1 id FROM dbo.VNtlSales);
 
 	DECLARE @len INT;
-	SET @len = (SELECT COUNT(*) + @cnt FROM dbo.TNtlOrder);
+	SET @len = (SELECT COUNT(*) + @cnt FROM dbo.VNtlSales);
 
     WHILE @cnt < @len
     BEGIN
         INSERT INTO #tmp_data 
         SELECT 
-            o.name, p.name, '', '', '' 
+            [order], [platform], '', '', '', ''
         FROM 
-            dbo.TNtlOrder o
-            JOIN dbo.TNtlPlatform p ON o.platform_id = p.id
+            dbo.VNtlSales
         WHERE 
-            o.id = @cnt;
+            [id] = @cnt;
         INSERT INTO #tmp_data
         SELECT 
             name, 
             sku, 
             unit_price, 
             quantity, 
-            total_price 
+            total_price,
+            remark
         FROM dbo.VNtlSalesItemSummary 
         WHERE order_id = @cnt;
 		SET @cnt = @cnt + 1;

@@ -58,7 +58,7 @@ let orderDict = {
         attr: `orderSubTotal`,
         css: `"div.buyer-payment-content .next-list-item:nth-child(1) .currency-text-scope"`,
     },
-    "OrderSellerShippingFee": {
+    "OrderShippingFee": {
         attr: `orderSellerShippingFee`,
         css: `"div.buyer-payment-content .next-list-item:nth-child(2) .currency-text-scope"`,
     },
@@ -70,7 +70,7 @@ let orderDict = {
         attr: `orderDiscountFee`,
         css: `"div.buyer-payment-content .next-list-item:nth-child(4) .currency-text-scope"`,
     },
-    "OrderBuyerTotalPrice": {
+    "OrderTotalPrice": {
         attr: `orderBuyerTotalPrice`,
         css: `"div.buyer-payment-content .next-list-item:last-child .currency-text-scope"`,
     },

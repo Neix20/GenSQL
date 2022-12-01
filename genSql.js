@@ -14,21 +14,21 @@ let fileNameDir = path.join(__dirname, 'models');
 let fileNameArr = ["toGen"];
 fileNameArr = fileNameArr.map(x => `${x}.sql`);
 
-const sql_js_str = genSqlStrArr(fileNameDir, fileNameArr);
+// const sql_js_str = genSqlStrArr(fileNameDir, fileNameArr);
 
-// const sql_js_str = `
-// -- Permission Table
-// DROP TABLE dbo.TNtlPermission;
+const sql_js_str = `
+-- Permission Table
+DROP TABLE dbo.TNtlPermission;
 
-// CREATE TABLE dbo.TNtlPermission(
-//     id INT IDENTITY(1, 1) not null,
-//     name VARCHAR(100),
-//     link VARCHAR(100),
-//     CONSTRAINT permission_id_pk PRIMARY KEY (id)
-// );
-// `
-// .replace(/DECIMAL\(10, (\d)\)/g, "DECIMAL(10,$1)")
-// .replace(/IDENTITY\(1, 1\)/g, "IDENTITY(1,1)");
+CREATE TABLE dbo.TNtlPermission(
+    id INT IDENTITY(1, 1) not null,
+    name VARCHAR(100),
+    link VARCHAR(100),
+    CONSTRAINT permission_id_pk PRIMARY KEY (id)
+);
+`
+.replace(/DECIMAL\(10, (\d)\)/g, "DECIMAL(10,$1)")
+.replace(/IDENTITY\(1, 1\)/g, "IDENTITY(1,1)");
 
 // Declare Variables to be used
 const sql_dict = genSqlDict(sql_js_str);
@@ -58,16 +58,21 @@ for (let ind in Object.keys(sql_dict)) {
 
     console.log(table_stmt);
 
-    func_arr.forEach((func, ind) => {
+    // func_arr.forEach((func, ind) => {
 
-        // Comment Before Each procedure
-        console.log(`\n-- ${comment_arr[ind]}`)
+    //     // Comment Before Each procedure
+    //     console.log(`\n-- ${comment_arr[ind]}`)
 
-        let str = func(table_name, arr);
+    //     let str = func(table_name, arr);
 
-        // Remove Tab Spaces
-        console.log(str.replace(/\n[ ]{4,}/g, "\n"));
-    });
+    //     // Remove Tab Spaces
+    //     console.log(str.replace(/\n[ ]{4,}/g, "\n"));
+    // });
+
+    let str = genInsert(table_name, arr);
+    str = str.replace(/\n[ ]{4,}/g, "\n");
+    console.log(str);
+
 
     console.log();
 
