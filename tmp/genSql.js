@@ -7,12 +7,14 @@ const { genSelectAll, genSelectByPk } = require("./lib/js2Sql");
 const { genInsert, genDelete, genUpdate } = require("./lib/js2Sql");
 
 // Generate Sql Statement String
-const path = require('path');
+const path = require("path");
 let fileNameDir = path.join(__dirname, 'models');
 
 // Glob When Given Directory
-let fileNameArr = ["toGen"];
-fileNameArr = fileNameArr.map(x => `${x}.sql`);
+let fileNameArr = ["tmp"];
+fileNameArr = fileNameArr
+.map(x => `${x}.sql`)
+.map(x => path.join("models", x));
 
 const sql_js_str = genSqlStrArr(fileNameDir, fileNameArr);
 
@@ -41,31 +43,23 @@ const table_arr = sql_js_str.match(/CREATE TABLE (.|\n)+?\);/g);
 const func_arr = [genInsert, genUpdate, genDelete];
 const comment_arr = ["Insert New Record", "Update Existing Record", "Delete Record"].map(x => `Stored Procedure: ${x}`);
 
-// Lambda
-f = x => {
-    return x.split("TNtl")[1].replace(/([a-z])([A-Z])/g, '$1 $2');
-};
+for(let ind in table_arr) {
 
-for (let ind in Object.keys(sql_dict)) {
-    let key = Object.keys(sql_dict)[ind];
     let table_stmt = table_arr[ind];
-    let table_name = key;
-    let arr = sql_dict[table_name];
-
-    console.log(`DROP TABLE ${table_name};`);
-
     console.log(table_stmt);
 
-    func_arr.forEach((func, ind) => {
+    let tableName = Object.keys(sql_dict);
+    let tableDict = sql_dict[tableName];
+
+    for(let fInd in func_arr) {
+        let func = func_arr[fInd];
 
         // Comment Before Each procedure
-        console.log(`\n-- ${comment_arr[ind]}`)
+        console.log(`\n-- ${comment_arr[fInd]}`)
 
-        let str = func(table_name, arr);
+        let str = func(tableName, tableDict);
 
         // Remove Tab Spaces
         console.log(str.replace(/\n[ ]{4,}/g, "\n"));
-    });
-
-    console.log();
+    }
 }
