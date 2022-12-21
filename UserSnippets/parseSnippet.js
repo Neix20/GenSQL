@@ -1,5 +1,30 @@
 let str = `
-const [window, setWindow] = useState();
+from flask import Flask
+from flask_cors import CORS
+
+import os
+
+import controller
+
+app = Flask(__name__)
+
+# Add Routing
+app.register_blueprint(controller.\${1:controller_file_name}, url_prefix="/\${2:controller_name}")
+
+@app.route('/', methods=["GET"])
+def index():
+    file_dir = f"{os.getcwd()}\\public\\index.html"
+    
+    # Read File
+    inFile = open(file_dir, "r")
+    
+    line = inFile.read()
+    
+    return line
+
+if __name__ == '__main__':
+    CORS(app)
+    app.run(host='0.0.0.0', port=5050, debug=True)
 `;
 
 // Split Into Array
