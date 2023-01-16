@@ -17,7 +17,7 @@ const sql_js_str = genSqlStrArr(fileNameArr);
 
 const sql_dict = genSqlDict(sql_js_str);
 
-let namespace = "DAL";
+let namespace = "VtVisionPortal.Utils";
 
 for (let tableName in sql_dict) {
 

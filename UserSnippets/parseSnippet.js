@@ -1,30 +1,31 @@
 let str = `
-from flask import Flask
-from flask_cors import CORS
+const { getData, addData, updateData, deleteData } = require("./../firebase-wrapper");
 
-import os
+const tblName = "\${tblName}";
 
-import controller
+async function get\${tblName}() {
+    const res = await getData(tblName);
+    return res;
+}
 
-app = Flask(__name__)
+async function add\${tblName}(obj) {
+    await addData(tblName, obj);
+}
 
-# Add Routing
-app.register_blueprint(controller.\${1:controller_file_name}, url_prefix="/\${2:controller_name}")
+async function update\${tblName}(obj) {
+    await updateData(tblName, obj);
+}
 
-@app.route('/', methods=["GET"])
-def index():
-    file_dir = f"{os.getcwd()}\\public\\index.html"
-    
-    # Read File
-    inFile = open(file_dir, "r")
-    
-    line = inFile.read()
-    
-    return line
+async function delete\${tblName}(obj) {
+    await deleteData(tblName, obj);
+}
 
-if __name__ == '__main__':
-    CORS(app)
-    app.run(host='0.0.0.0', port=5050, debug=True)
+module.exports = {
+    get\${tblName},
+    add\${tblName},
+    update\${tblName},
+    delete\${tblName},
+}
 `;
 
 // Split Into Array
