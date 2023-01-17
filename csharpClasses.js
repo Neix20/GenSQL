@@ -17,11 +17,13 @@ const sql_js_str = genSqlStrArr(fileNameArr);
 
 const sql_dict = genSqlDict(sql_js_str);
 
-let namespace = "VtVisionPortal.Utils";
+// let namespace = "NtlSystemPortal.Models";
+let project = "NtlSystemPortal";
+let dir = "Models";
 
 for (let tableName in sql_dict) {
 
     let dict = sql_dict[tableName];
 
-    cSharpOrm.genCSharpFile(namespace, tableName, dict);
+    cSharpOrm.genCSharpFile(project, dir, tableName, dict);
 }

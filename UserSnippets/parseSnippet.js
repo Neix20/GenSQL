@@ -1,31 +1,12 @@
 let str = `
-const { getData, addData, updateData, deleteData } = require("./../firebase-wrapper");
+// Setting Detail Grid
+settings.SettingsDetail.AllowOnlyOneMasterRowExpanded = false;
+settings.SettingsDetail.ShowDetailRow = true;
 
-const tblName = "\${tblName}";
-
-async function get\${tblName}() {
-    const res = await getData(tblName);
-    return res;
-}
-
-async function add\${tblName}(obj) {
-    await addData(tblName, obj);
-}
-
-async function update\${tblName}(obj) {
-    await updateData(tblName, obj);
-}
-
-async function delete\${tblName}(obj) {
-    await deleteData(tblName, obj);
-}
-
-module.exports = {
-    get\${tblName},
-    add\${tblName},
-    update\${tblName},
-    delete\${tblName},
-}
+settings.SetDetailRowTemplateContent(c =>
+{
+    Html.RenderAction("ProductComponentGridViewPartial", "ProductComponent", new { product_id = DataBinder.Eval(c.DataItem, "id") });
+});
 `;
 
 // Split Into Array

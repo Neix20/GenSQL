@@ -25,6 +25,8 @@ const comment_arr = ["Insert New Record", "Update Existing Record", "Delete Reco
 // const func_arr = [genSelectAll];
 // const comment_arr = ["Select All Record"].map(val => `Stored Procedure: ${val}`);
 
+let res = "";
+
 for(let ind in table_arr) {
     
     let table_stmt = table_arr[ind];
@@ -32,21 +34,38 @@ for(let ind in table_arr) {
     let tableName = Object.keys(sql_dict)[ind];
     let tableDict = sql_dict[tableName];
 
-    console.log(`DROP TABLE IF EXISTS ${tableName};`);
+    // res += `DROP TABLE IF EXISTS ${tableName};` + "\n";
 
-    console.log(table_stmt);
+    // res += table_stmt + "\n";
 
     for(let fInd in func_arr) {
         let func = func_arr[fInd];
 
         // Comment Before Each procedure
-        console.log(`\n-- ${comment_arr[fInd]}`)
+        res += `\n-- ${comment_arr[fInd]}` + "\n";
 
         let str = func(tableName, tableDict);
 
         // Remove Tab Spaces
-        console.log(str.replace(/\n[ ]{4,}/g, "\n"));
+        res += str.replace(/\n[ ]{4,}/g, "\n") + "\n";
     }
 
-    console.log();
+    res += "\n";
 }
+
+const fs = require("fs");
+
+const OUTPUT_DIR = path.join("output", "sql");
+
+let file_path = path.join(OUTPUT_DIR, "output.sql");
+
+// Check if File exists
+try {
+    fs.accessSync(file_path, fs.constants.F_OK);
+    fs.unlinkSync(file_path);
+} catch (err) {
+}
+
+fs.writeFileSync(file_path, res);
+
+console.log(`Successfully write to ${file_path}!`);
