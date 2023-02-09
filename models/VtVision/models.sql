@@ -16,11 +16,22 @@ CREATE TABLE dbo.TVtCamera(
     name VARCHAR(100),
     latitude DECIMAL(6, 3),
     longitude DECIMAL(6, 3),
+    last_captured_img_path VARCHAR(max),
     status VARCHAR(100),
     last_active_date DATETIME,
     created_by VARCHAR(100),
     created_date DATETIME,
     CONSTRAINT TVtCamera_pk PRIMARY KEY (id)
+);
+
+-- Camera Livestream
+CREATE TABLE dbo.TVtCameraLiveStream(
+    id INT IDENTITY(1,1) not null,
+    name VARCHAR(max),
+    vid_path VARCHAR(max),
+    captured_dt DATETIME,
+    camera_id INT,
+    CONSTRAINT TVtCameraLiveStream_pk PRIMARY KEY (id)
 );
 
 -- Passerby

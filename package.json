@@ -9,7 +9,7 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "start": "node index.js",
-    "genSql": "node generatorSQL.js",
+    "genSQL": "node generatorSQL.js",
     "genCS": "node csharpClasses.js",
     "clearCS": "del output\\cs\\*"
   },

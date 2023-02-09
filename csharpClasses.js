@@ -18,7 +18,7 @@ const sql_js_str = genSqlStrArr(fileNameArr);
 const sql_dict = genSqlDict(sql_js_str);
 
 // let namespace = "NtlSystemPortal.Models";
-let project = "NtlSystemPortal";
+let project = "BuahCintaPortal";
 let dir = "Models";
 
 for (let tableName in sql_dict) {

@@ -34,9 +34,9 @@ for(let ind in table_arr) {
     let tableName = Object.keys(sql_dict)[ind];
     let tableDict = sql_dict[tableName];
 
-    // res += `DROP TABLE IF EXISTS ${tableName};` + "\n";
+    res += `DROP TABLE IF EXISTS ${tableName};` + "\n";
 
-    // res += table_stmt + "\n";
+    res += table_stmt + "\n";
 
     for(let fInd in func_arr) {
         let func = func_arr[fInd];

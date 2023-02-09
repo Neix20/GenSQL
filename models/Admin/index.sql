@@ -1,7 +1,7 @@
 -- User Table
-DROP TABLE dbo.TBuahCintaPortalUser;
+DROP TABLE dbo.TNtlUser;
 
-CREATE TABLE dbo.TBuahCintaPortalUser(
+CREATE TABLE dbo.TNtlUser(
     id INT IDENTITY(1, 1) not null,
     username VARCHAR(max),
     password VARCHAR(max),
@@ -10,18 +10,18 @@ CREATE TABLE dbo.TBuahCintaPortalUser(
 );
 
 -- Role Table
-DROP TABLE dbo.TBuahCintaPortalRole;
+DROP TABLE dbo.TNtlRole;
 
-CREATE TABLE dbo.TBuahCintaPortalRole(
+CREATE TABLE dbo.TNtlRole(
     id INT IDENTITY(1, 1) not null,
     name VARCHAR(100),
     CONSTRAINT role_id_pk PRIMARY KEY (id)
 );
 
 -- Permission Table
-DROP TABLE dbo.TBuahCintaPortalPermission;
+DROP TABLE dbo.TNtlPermission;
 
-CREATE TABLE dbo.TBuahCintaPortalPermission(
+CREATE TABLE dbo.TNtlPermission(
     id INT IDENTITY(1, 1) not null,
     name VARCHAR(100),
     link VARCHAR(100),
@@ -29,9 +29,9 @@ CREATE TABLE dbo.TBuahCintaPortalPermission(
 );
 
 -- User Role Table
-DROP TABLE dbo.TBuahCintaPortalUserRole;
+DROP TABLE dbo.TNtlUserRole;
 
-CREATE TABLE dbo.TBuahCintaPortalUserRole(
+CREATE TABLE dbo.TNtlUserRole(
     id INT IDENTITY(1, 1) not null,
     user_id INT,
     role_id INT,
@@ -40,9 +40,9 @@ CREATE TABLE dbo.TBuahCintaPortalUserRole(
 );
 
 -- Role Permission Table
-DROP TABLE dbo.TBuahCintaPortalRolePermission;
+DROP TABLE dbo.TNtlRolePermission;
 
-CREATE TABLE dbo.TBuahCintaPortalRolePermission(
+CREATE TABLE dbo.TNtlRolePermission(
     id INT IDENTITY(1, 1) not null,
     role_id INT,
     permission_id INT,
