@@ -1,53 +1,42 @@
 `
--- User Table
-DROP TABLE dbo.T\${tblName}User;
+[HttpGet()]
+public HttpResponseMessage \${1:funcName}([FromBody] JToken postData)
+{
+    string Result = "";
+    string ResponseCode = clsConst.const_ResponseCode_SystemError;
+    JObject jobj = new JObject();
+    try
+    {
+        string Messaging = postData.ToString();
 
-CREATE TABLE dbo.T\${tblName}User(
-    id INT IDENTITY(1, 1) not null,
-    username VARCHAR(max),
-    password VARCHAR(max),
-    email_address VARCHAR(max),
-    CONSTRAINT user_id_pk PRIMARY KEY (id)
-);
+        // Log FileName
+        clsLogger.InfoLog("\${2:projName} \${1:funcName}");
+        clsLogger.InfoLog(Messaging);
 
--- Role Table
-DROP TABLE dbo.T\${tblName}Role;
+        // Parameters
+        \${3:// params}
 
-CREATE TABLE dbo.T\${tblName}Role(
-    id INT IDENTITY(1, 1) not null,
-    name VARCHAR(100),
-    CONSTRAINT role_id_pk PRIMARY KEY (id)
-);
+        bool flag = false;
 
--- Permission Table
-DROP TABLE dbo.T\${tblName}Permission;
+        // Condition
+        \${4:// condition}
 
-CREATE TABLE dbo.T\${tblName}Permission(
-    id INT IDENTITY(1, 1) not null,
-    name VARCHAR(100),
-    link VARCHAR(100),
-    CONSTRAINT permission_id_pk PRIMARY KEY (id)
-);
+        if (flag)
+        {
+            ResponseCode = clsConst.const_ResponseCode_Successful;
+        }
+        else
+        {
+            ResponseCode = clsConst.const_Response_Code_API_MissingInformation;
+        }
+    }
+    catch (Exception ex)
+    {
+        clsLogger.ErrorLog(fstrPageName + "\${1:funcName}", ex);
+    }
 
--- User Role Table
-DROP TABLE dbo.T\${tblName}UserRole;
-
-CREATE TABLE dbo.T\${tblName}UserRole(
-    id INT IDENTITY(1, 1) not null,
-    user_id INT,
-    role_id INT,
-    status VARCHAR(100), 
-    CONSTRAINT user_role_id_pk PRIMARY KEY (id)
-);
-
--- Role Permission Table
-DROP TABLE dbo.T\${tblName}RolePermission;
-
-CREATE TABLE dbo.T\${tblName}RolePermission(
-    id INT IDENTITY(1, 1) not null,
-    role_id INT,
-    permission_id INT,
-    status VARCHAR(100), 
-    CONSTRAINT role_permission_id_pk PRIMARY KEY (id)
-);
+    jobj[clsConst.const_Key_Field_ResponseCode] = ResponseCode;
+    Result = ConvertJsonObjectToString(jobj);
+    return ReturnResult(Result);
+}
 `
