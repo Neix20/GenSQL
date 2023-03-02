@@ -10,6 +10,7 @@
     "test": "echo \"Error: no test specified\" && exit 1",
     "start": "node index",
     "genSQL": "node generatorSQL",
+    "genParam": "node genParam",
     "genCS": "node csharpClasses",
     "clearCS": "del output\\cs\\*"
   },

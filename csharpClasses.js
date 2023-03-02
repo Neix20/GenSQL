@@ -25,5 +25,7 @@ for (let tableName in sql_dict) {
 
     let dict = sql_dict[tableName];
 
-    cSharpOrm.genCSharpFile(project, dir, tableName, dict);
+    // cSharpOrm.genCSharpFile(project, dir, tableName, dict);
+    // console.log(dict);
+    console.log(cSharpOrm.genDevExpressCsHtml(dict));
 }
